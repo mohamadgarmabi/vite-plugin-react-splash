@@ -24,6 +24,9 @@ ${version ? `<div class="splash-version">v${version}</div>` : ''}
 (function(){
   var d=${duration},o=${onlyStandalone},s1=${showOnce},s=document.getElementById('vite-splash-screen');
   if(s){
+    var st; try { st = localStorage.getItem('v-splash-theme'); } catch (e) {}
+    if (st === 'light' || st === 'dark') s.classList.add('theme-' + st);
+
     var isPWA = window.matchMedia('(display-mode: standalone)').matches || (window.navigator && window.navigator.standalone);
     var shown = false;
     try { shown = localStorage.getItem('v-splash-shown'); } catch (e) {}

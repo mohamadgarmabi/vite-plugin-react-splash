@@ -27,6 +27,7 @@ interface SplashScreenOptions {
 
 declare function useSplashScreen(): {
     hideSplashScreen: () => void;
+    setSplashTheme: (theme: "light" | "dark" | "auto") => void;
 };
 
 declare function viteSplashScreen(options: SplashScreenOptions): Plugin;

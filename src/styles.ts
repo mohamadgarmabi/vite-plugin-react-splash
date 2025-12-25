@@ -34,6 +34,16 @@ export const generateStyles = (options: SplashScreenOptions) => {
     `;
   }
 
+  themeStyles += `
+    #vite-splash-screen.theme-light { background-color: ${light.background} !important; color: ${light.color} !important; }
+    #vite-splash-screen.theme-light .splash-logo-light { display: block !important; }
+    #vite-splash-screen.theme-light .splash-logo-dark { display: none !important; }
+
+    #vite-splash-screen.theme-dark { background-color: ${dark.background} !important; color: ${dark.color} !important; }
+    #vite-splash-screen.theme-dark .splash-logo-dark { display: block !important; }
+    #vite-splash-screen.theme-dark .splash-logo-light { display: none !important; }
+  `;
+
   if (animation === 'pulse') {
     extraStyles += `
       .splash-logo { animation: splash-pulse 2s infinite; }

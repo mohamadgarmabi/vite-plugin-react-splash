@@ -53,10 +53,13 @@ import { useEffect } from 'react';
 import { useSplashScreen } from 'vite-plugin-react-splash';
 
 function App() {
-  const { hideSplashScreen } = useSplashScreen();
+  const { hideSplashScreen, setSplashTheme } = useSplashScreen();
 
   useEffect(() => {
-    // Some initialization logic
+    // Example: Sync with your app's theme
+    const myAppTheme = 'dark'; // get from your state
+    setSplashTheme(myAppTheme); 
+
     fetchData().then(() => {
       hideSplashScreen();
     });
