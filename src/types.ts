@@ -1,5 +1,5 @@
 export interface SplashScreenOptions {
-  logo: string; // SVG string or URL (preferably SVG string to inject directly)
+  logo: string | { light: string; dark: string }; // SVG string or URL
   duration?: number; // Duration in milliseconds
   text?: string; // Text to display below the logo
   version?: string; // Version to display at the bottom

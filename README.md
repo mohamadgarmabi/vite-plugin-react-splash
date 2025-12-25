@@ -25,7 +25,10 @@ export default defineConfig({
   plugins: [
     react(),
     viteSplashScreen({
-      logo: `<svg ...>...</svg>`, // Your SVG string
+      logo: {
+        light: `<svg ...>...</svg>`, // Logo for light mode
+        dark: `<svg ...>...</svg>`   // Logo for dark mode
+      },
       duration: 3000,
       text: 'Loading My Awesome App...',
       version: '1.0.0',
@@ -67,7 +70,7 @@ function App() {
 
 | Option | Type | Description |
 | --- | --- | --- |
-| `logo` | `string` | SVG string to display as the logo. |
+| `logo` | `string \| { light: string, dark: string }` | SVG string or object with light/dark versions. |
 | `duration` | `number` | Time in ms before the splash screen automatically hides. |
 | `text` | `string` | Text to display below the logo. |
 | `version` | `string` | Version string to display at the bottom. |

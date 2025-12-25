@@ -47,10 +47,14 @@ export const generateStyles = (options: SplashScreenOptions) => {
     #vite-splash-screen.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
     .splash-logo { width: 120px; height: 120px; margin-bottom: 20px; }
     .splash-logo svg { fill: currentColor; width: 100%; height: 100%; }
+    .splash-logo-dark { display: none; }
+    .splash-logo-light { display: block; }
     .splash-text { font-size: 1.2rem; font-weight: 500; }
     .splash-version { position: absolute; bottom: 20px; font-size: 0.8rem; opacity: 0.7; }
     @media (prefers-color-scheme: dark) {
       #vite-splash-screen { background-color: ${dark.background}; color: ${dark.color}; }
+      .splash-logo-dark { display: block; }
+      .splash-logo-light { display: none; }
     }
     ${extraStyles}
   `;

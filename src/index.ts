@@ -9,10 +9,14 @@ export function viteSplashScreen(options: SplashScreenOptions): Plugin {
       const styles = generateStyles(options);
       const { logo, text, version, duration = 3000, onlyStandalone = false, showOnce = false } = options;
       
+      const logoHtml = typeof logo === 'string' 
+        ? `<div class="splash-logo">${logo}</div>`
+        : `<div class="splash-logo splash-logo-light">${logo.light}</div><div class="splash-logo splash-logo-dark">${logo.dark}</div>`;
+
       const splashHtml = `
 <style>${styles}</style>
 <div id="vite-splash-screen">
-<div class="splash-logo">${logo}</div>
+${logoHtml}
 ${text ? `<div class="splash-text">${text}</div>` : ''}
 ${version ? `<div class="splash-version">v${version}</div>` : ''}
 </div>
