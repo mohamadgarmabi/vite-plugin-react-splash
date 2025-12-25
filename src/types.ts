@@ -15,5 +15,7 @@ export interface SplashScreenOptions {
   };
   animation?: 'none' | 'fade' | 'pulse' | 'slide-up' | 'gradient-mesh'; // Advanced background animation
   meshColors?: string[]; // Custom colors for gradient-mesh animation
+  onlyStandalone?: boolean; // Only show in PWA standalone mode
+  showOnce?: boolean; // Only show once (on first load)
 }
 

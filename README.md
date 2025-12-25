@@ -33,7 +33,9 @@ export default defineConfig({
         light: { background: '#f0f0f0', color: '#333' },
         dark: { background: '#1a1a1a', color: '#fff' }
       },
-      animation: 'gradient-mesh' // Options: 'none', 'pulse', 'gradient-mesh'
+      animation: 'gradient-mesh', // Options: 'none', 'pulse', 'gradient-mesh'
+      onlyStandalone: true, // Only show when running as a PWA in standalone mode
+      showOnce: true // Only show on the very first visit
     }),
   ],
 });
@@ -71,4 +73,6 @@ function App() {
 | `version` | `string` | Version string to display at the bottom. |
 | `theme` | `object` | Light and dark mode colors. |
 | `animation` | `string` | Animation style: `'none'`, `'pulse'`, `'gradient-mesh'`. |
+| `onlyStandalone` | `boolean` | If `true`, only shows the splash screen in PWA standalone mode. |
+| `showOnce` | `boolean` | If `true`, only shows the splash screen on the first load (persists via `localStorage`). |
 

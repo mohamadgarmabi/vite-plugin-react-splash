@@ -17,6 +17,8 @@ interface SplashScreenOptions {
     };
     animation?: 'none' | 'fade' | 'pulse' | 'slide-up' | 'gradient-mesh';
     meshColors?: string[];
+    onlyStandalone?: boolean;
+    showOnce?: boolean;
 }
 
 declare function useSplashScreen(): {
