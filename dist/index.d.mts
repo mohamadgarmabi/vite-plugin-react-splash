@@ -1,7 +1,10 @@
 import { Plugin } from 'vite';
 
 interface SplashScreenOptions {
-    logo: string;
+    logo: string | {
+        light: string;
+        dark: string;
+    };
     duration?: number;
     text?: string;
     version?: string;
