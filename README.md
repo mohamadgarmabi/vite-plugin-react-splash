@@ -71,6 +71,7 @@ function App() {
 | Option | Type | Description |
 | --- | --- | --- |
 | `logo` | `string \| { light: string, dark: string }` | SVG string or object with light/dark versions. |
+| `mode` | `'light' \| 'dark' \| 'auto'` | Theme mode. `'auto'` detects system settings (default). |
 | `duration` | `number` | Time in ms before the splash screen automatically hides. |
 | `text` | `string` | Text to display below the logo. |
 | `version` | `string` | Version string to display at the bottom. |

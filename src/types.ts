@@ -13,6 +13,7 @@ export interface SplashScreenOptions {
       color: string;
     };
   };
+  mode?: 'light' | 'dark' | 'auto'; // Manual override or auto-detection (default: 'auto')
   animation?: 'none' | 'fade' | 'pulse' | 'slide-up' | 'gradient-mesh'; // Advanced background animation
   meshColors?: string[]; // Custom colors for gradient-mesh animation
   onlyStandalone?: boolean; // Only show in PWA standalone mode

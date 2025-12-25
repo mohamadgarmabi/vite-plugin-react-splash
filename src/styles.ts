@@ -1,11 +1,38 @@
 import { SplashScreenOptions } from './types';
 
 export const generateStyles = (options: SplashScreenOptions) => {
-  const { theme, animation, meshColors } = options;
+  const { theme, animation, meshColors, mode = 'auto' } = options;
   const light = theme?.light || { background: '#ffffff', color: '#000000' };
   const dark = theme?.dark || { background: '#000000', color: '#ffffff' };
 
   let extraStyles = '';
+  let themeStyles = '';
+
+  if (mode === 'light') {
+    themeStyles = `
+      #vite-splash-screen { background-color: ${light.background}; color: ${light.color}; }
+      .splash-logo-light { display: block; }
+      .splash-logo-dark { display: none; }
+    `;
+  } else if (mode === 'dark') {
+    themeStyles = `
+      #vite-splash-screen { background-color: ${dark.background}; color: ${dark.color}; }
+      .splash-logo-light { display: none; }
+      .splash-logo-dark { display: block; }
+    `;
+  } else {
+    // Auto mode: uses prefers-color-scheme
+    themeStyles = `
+      #vite-splash-screen { background-color: ${light.background}; color: ${light.color}; }
+      .splash-logo-light { display: block; }
+      .splash-logo-dark { display: none; }
+      @media (prefers-color-scheme: dark) {
+        #vite-splash-screen { background-color: ${dark.background}; color: ${dark.color}; }
+        .splash-logo-dark { display: block; }
+        .splash-logo-light { display: none; }
+      }
+    `;
+  }
 
   if (animation === 'pulse') {
     extraStyles += `
@@ -47,15 +74,9 @@ export const generateStyles = (options: SplashScreenOptions) => {
     #vite-splash-screen.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
     .splash-logo { width: 120px; height: 120px; margin-bottom: 20px; }
     .splash-logo svg { fill: currentColor; width: 100%; height: 100%; }
-    .splash-logo-dark { display: none; }
-    .splash-logo-light { display: block; }
     .splash-text { font-size: 1.2rem; font-weight: 500; }
     .splash-version { position: absolute; bottom: 20px; font-size: 0.8rem; opacity: 0.7; }
-    @media (prefers-color-scheme: dark) {
-      #vite-splash-screen { background-color: ${dark.background}; color: ${dark.color}; }
-      .splash-logo-dark { display: block; }
-      .splash-logo-light { display: none; }
-    }
+    ${themeStyles}
     ${extraStyles}
   `;
 
