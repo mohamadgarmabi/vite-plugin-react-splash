@@ -18,6 +18,7 @@ interface SplashScreenOptions {
             color: string;
         };
     };
+    mode?: 'light' | 'dark' | 'auto';
     animation?: 'none' | 'fade' | 'pulse' | 'slide-up' | 'gradient-mesh';
     meshColors?: string[];
     onlyStandalone?: boolean;
