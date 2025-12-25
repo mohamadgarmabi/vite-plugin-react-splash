@@ -1,0 +1,74 @@
+# vite-plugin-react-splash
+
+A Vite plugin and React hook for easy splash screen management in React applications.
+
+## Installation
+
+```bash
+npm install vite-plugin-react-splash
+# or
+yarn add vite-plugin-react-splash
+```
+
+## Usage
+
+### 1. Configure the Vite Plugin
+
+In your `vite.config.ts`:
+
+```typescript
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+import { viteSplashScreen } from 'vite-plugin-react-splash';
+
+export default defineConfig({
+  plugins: [
+    react(),
+    viteSplashScreen({
+      logo: `<svg ...>...</svg>`, // Your SVG string
+      duration: 3000,
+      text: 'Loading My Awesome App...',
+      version: '1.0.0',
+      theme: {
+        light: { background: '#f0f0f0', color: '#333' },
+        dark: { background: '#1a1a1a', color: '#fff' }
+      },
+      animation: 'gradient-mesh' // Options: 'none', 'pulse', 'gradient-mesh'
+    }),
+  ],
+});
+```
+
+### 2. Use the React Hook (Optional)
+
+If you want to manually hide the splash screen (e.g., after initial data fetching):
+
+```tsx
+import { useEffect } from 'react';
+import { useSplashScreen } from 'vite-plugin-react-splash';
+
+function App() {
+  const { hideSplashScreen } = useSplashScreen();
+
+  useEffect(() => {
+    // Some initialization logic
+    fetchData().then(() => {
+      hideSplashScreen();
+    });
+  }, []);
+
+  return <div>My App Content</div>;
+}
+```
+
+## Options
+
+| Option | Type | Description |
+| --- | --- | --- |
+| `logo` | `string` | SVG string to display as the logo. |
+| `duration` | `number` | Time in ms before the splash screen automatically hides. |
+| `text` | `string` | Text to display below the logo. |
+| `version` | `string` | Version string to display at the bottom. |
+| `theme` | `object` | Light and dark mode colors. |
+| `animation` | `string` | Animation style: `'none'`, `'pulse'`, `'gradient-mesh'`. |
+
