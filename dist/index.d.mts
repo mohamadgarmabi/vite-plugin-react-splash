@@ -7,6 +7,8 @@ interface SplashScreenOptions {
     };
     duration?: number;
     text?: string;
+    textAnimation?: 'none' | 'chars';
+    textCharDelay?: number;
     version?: string;
     theme?: {
         light: {
@@ -19,8 +21,9 @@ interface SplashScreenOptions {
         };
     };
     mode?: 'light' | 'dark' | 'auto';
-    animation?: 'none' | 'fade' | 'pulse' | 'slide-up' | 'gradient-mesh';
+    animation?: 'none' | 'fade' | 'pulse' | 'slide-up' | 'gradient-mesh' | 'spin' | 'bounce' | 'shimmer' | 'ripple' | 'dots' | 'bars' | 'spinner' | 'progress';
     meshColors?: string[];
+    backgroundAnimation?: 'none' | 'pulse' | 'breath' | 'gradient' | 'wave';
     onlyStandalone?: boolean;
     showOnce?: boolean;
 }
