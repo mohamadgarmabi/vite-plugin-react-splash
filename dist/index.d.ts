@@ -26,6 +26,9 @@ interface SplashScreenOptions {
     backgroundAnimation?: 'none' | 'pulse' | 'breath' | 'gradient' | 'wave';
     onlyStandalone?: boolean;
     showOnce?: boolean;
+    showOnceStorage?: 'session' | 'local';
+    showOnAppEnter?: boolean;
+    appScope?: string | string[];
 }
 
 declare function useSplashScreen(): {

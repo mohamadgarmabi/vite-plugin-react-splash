@@ -38,6 +38,8 @@ export interface SplashScreenOptions {
     | 'gradient'
     | 'wave'; // Background color animation
   onlyStandalone?: boolean; // Only show in PWA standalone mode
-  showOnce?: boolean; // Only show once (on first load)
+  showOnce?: boolean; // Only show once per storage scope
+  showOnceStorage?: 'session' | 'local'; // Keep splash hidden for the current tab session or across browser restarts
+  showOnAppEnter?: boolean; // Only show when navigation enters this app from outside its scope
+  appScope?: string | string[]; // Path prefix(es) that belong to the current app, e.g. '/dealer'
 }
-

@@ -38,7 +38,9 @@ export default defineConfig({
       },
       animation: 'gradient-mesh', // Options: 'none', 'pulse', 'gradient-mesh'
       onlyStandalone: true, // Only show when running as a PWA in standalone mode
-      showOnce: true // Only show on the very first visit
+      showOnce: true, // Optional: only once per session/browser storage
+      showOnAppEnter: true,
+      appScope: '/dealer' // Show when entering Dealer from outside /dealer, but not on Dealer reloads/internal routes
     }),
   ],
 });
@@ -81,5 +83,7 @@ function App() {
 | `theme` | `object` | Light and dark mode colors. |
 | `animation` | `string` | Animation style: `'none'`, `'pulse'`, `'gradient-mesh'`. |
 | `onlyStandalone` | `boolean` | If `true`, only shows the splash screen in PWA standalone mode. |
-| `showOnce` | `boolean` | If `true`, only shows the splash screen on the first load (persists via `localStorage`). |
-
+| `showOnce` | `boolean` | If `true`, only shows the splash screen once per selected storage scope. |
+| `showOnceStorage` | `'session' \| 'local'` | Controls whether `showOnce` is remembered for the current tab session or across browser restarts. |
+| `showOnAppEnter` | `boolean` | If `true`, shows splash only when entering the app from outside its scope. Reloads and in-app navigations skip it. |
+| `appScope` | `string \| string[]` | Path prefix(es) that belong to the app, for example `'/dealer'`. If omitted, the first URL segment is used. |
