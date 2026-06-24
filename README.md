@@ -31,16 +31,30 @@ export default defineConfig({
       },
       duration: 3000,
       text: 'Loading My Awesome App...',
+      textClassName: 'my-splash-caption',
+      textStyle: {
+        fontSize: '0.95rem',
+        color: '#666',
+        marginTop: '12px',
+      },
+      svgAnimation: {
+        type: 'sequential-fill',
+        direction: 'ltr', // or 'rtl'
+        stepDelay: 120,
+        stepDuration: 350,
+      },
+      bodyClass: 'overflow-hidden',
+      bodyAttributes: { 'data-splash-active': 'true' },
       version: '1.0.0',
       theme: {
         light: { background: '#f0f0f0', color: '#333' },
         dark: { background: '#1a1a1a', color: '#fff' }
       },
-      animation: 'gradient-mesh', // Options: 'none', 'pulse', 'gradient-mesh'
-      onlyStandalone: true, // Only show when running as a PWA in standalone mode
-      showOnce: true, // Optional: only once per session/browser storage
+      animation: 'gradient-mesh',
+      onlyStandalone: true,
+      showOnce: true,
       showOnAppEnter: true,
-      appScope: '/dealer' // Show when entering Dealer from outside /dealer, but not on Dealer reloads/internal routes
+      appScope: '/dealer'
     }),
   ],
 });
@@ -79,6 +93,13 @@ function App() {
 | `mode` | `'light' \| 'dark' \| 'auto'` | Theme mode. `'auto'` detects system settings (default). |
 | `duration` | `number` | Time in ms before the splash screen automatically hides. |
 | `text` | `string` | Text to display below the logo. |
+| `textClassName` | `string` | Extra CSS class(es) for the description text. |
+| `textStyle` | `object` | Custom CSS styles for the description text (e.g. `fontSize`, `color`, `marginTop`). |
+| `textAnimation` | `'none' \| 'chars'` | Reveal description all at once or character by character. |
+| `textCharDelay` | `number` | Delay in ms between each character when `textAnimation` is `'chars'`. |
+| `svgAnimation` | `object` | Sequential SVG fill animation. See example below. |
+| `bodyAttributes` | `Record<string, string>` | Attributes merged onto `<body>` while splash is visible; restored on hide. |
+| `bodyClass` | `string \| string[]` | Class name(s) added to `<body>` while splash is visible; removed on hide. |
 | `version` | `string` | Version string to display at the bottom. |
 | `theme` | `object` | Light and dark mode colors. |
 | `animation` | `string` | Animation style: `'none'`, `'pulse'`, `'gradient-mesh'`. |

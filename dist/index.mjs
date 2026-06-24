@@ -1,13 +1,13 @@
-import {useCallback}from'react';var v=p=>{let{theme:c,animation:s,meshColors:e,backgroundAnimation:n,textAnimation:d,mode:m="auto"}=p,t=c?.light||{background:"#ffffff",color:"#000000"},r=c?.dark||{background:"#000000",color:"#ffffff"},a="",l="";if(m==="light"?l=`
-      #vite-splash-screen { background-color: ${t.background}; color: ${t.color}; }
+import {useCallback}from'react';var I=l=>l?Object.entries(l).filter(([,s])=>s!==void 0&&s!=="").map(([s,t])=>`${s.includes("-")?s:s.replace(/[A-Z]/g,o=>`-${o.toLowerCase()}`)}:${t}`).join(";"):"",$=l=>{let{theme:s,animation:t,meshColors:a,backgroundAnimation:o,textAnimation:f,textStyle:k,svgAnimation:m,mode:u="auto"}=l,i=s?.light||{background:"#ffffff",color:"#000000"},r=s?.dark||{background:"#000000",color:"#ffffff"},e="",n="";if(u==="light"?n=`
+      #vite-splash-screen { background-color: ${i.background}; color: ${i.color}; }
       .splash-logo-light { display: block; }
       .splash-logo-dark { display: none; }
-    `:m==="dark"?l=`
+    `:u==="dark"?n=`
       #vite-splash-screen { background-color: ${r.background}; color: ${r.color}; }
       .splash-logo-light { display: none; }
       .splash-logo-dark { display: block; }
-    `:l=`
-      #vite-splash-screen { background-color: ${t.background}; color: ${t.color}; }
+    `:n=`
+      #vite-splash-screen { background-color: ${i.background}; color: ${i.color}; }
       .splash-logo-light { display: block; }
       .splash-logo-dark { display: none; }
       @media (prefers-color-scheme: dark) {
@@ -15,39 +15,39 @@ import {useCallback}from'react';var v=p=>{let{theme:c,animation:s,meshColors:e,b
         .splash-logo-dark { display: block; }
         .splash-logo-light { display: none; }
       }
-    `,l+=`
-    #vite-splash-screen.theme-light { background-color: ${t.background} !important; color: ${t.color} !important; }
+    `,n+=`
+    #vite-splash-screen.theme-light { background-color: ${i.background} !important; color: ${i.color} !important; }
     #vite-splash-screen.theme-light .splash-logo-light { display: block !important; }
     #vite-splash-screen.theme-light .splash-logo-dark { display: none !important; }
 
     #vite-splash-screen.theme-dark { background-color: ${r.background} !important; color: ${r.color} !important; }
     #vite-splash-screen.theme-dark .splash-logo-dark { display: block !important; }
     #vite-splash-screen.theme-dark .splash-logo-light { display: none !important; }
-  `,s==="fade"&&(a+=`
+  `,t==="fade"&&(e+=`
       .splash-logo { animation: splash-fade 2s ease-in-out infinite; }
       @keyframes splash-fade {
         0%, 100% { opacity: 0.4; }
         50% { opacity: 1; }
       }
-    `),s==="pulse"&&(a+=`
+    `),t==="pulse"&&(e+=`
       .splash-logo { animation: splash-pulse 2s infinite; }
       @keyframes splash-pulse {
         0%, 100% { transform: scale(1); opacity: 1; }
         50% { transform: scale(1.1); opacity: 0.8; }
       }
-    `),s==="slide-up"&&(a+=`
+    `),t==="slide-up"&&(e+=`
       .splash-logo { animation: splash-slide-up 2s ease-in-out infinite; }
       @keyframes splash-slide-up {
         0%, 100% { transform: translateY(0); opacity: 1; }
         50% { transform: translateY(-12px); opacity: 0.9; }
       }
-    `),s==="spin"&&(a+=`
+    `),t==="spin"&&(e+=`
       .splash-logo { animation: splash-spin 1.5s linear infinite; }
       @keyframes splash-spin {
         from { transform: rotate(0deg); }
         to { transform: rotate(360deg); }
       }
-    `),s==="bounce"&&(a+=`
+    `),t==="bounce"&&(e+=`
       .splash-logo { animation: splash-bounce 1.2s ease-in-out infinite; }
       @keyframes splash-bounce {
         0%, 100% { transform: translateY(0); }
@@ -56,7 +56,7 @@ import {useCallback}from'react';var v=p=>{let{theme:c,animation:s,meshColors:e,b
         65% { transform: translateY(-8px); }
         80% { transform: translateY(0); }
       }
-    `),s==="shimmer"&&(a+=`
+    `),t==="shimmer"&&(e+=`
       .splash-logo { position: relative; overflow: hidden; }
       .splash-logo::after {
         content: ""; position: absolute; inset: 0;
@@ -75,7 +75,7 @@ import {useCallback}from'react';var v=p=>{let{theme:c,animation:s,meshColors:e,b
         0% { background-position: 200% 0; }
         100% { background-position: -200% 0; }
       }
-    `),s==="ripple"&&(a+=`
+    `),t==="ripple"&&(e+=`
       #vite-splash-screen::after {
         content: ""; position: absolute; left: 50%; top: 50%;
         width: 80px; height: 80px; margin: -40px 0 0 -40px;
@@ -86,7 +86,7 @@ import {useCallback}from'react';var v=p=>{let{theme:c,animation:s,meshColors:e,b
         0% { transform: scale(0.6); opacity: 0.5; }
         100% { transform: scale(2.2); opacity: 0; }
       }
-    `),s==="dots"&&(a+=`
+    `),t==="dots"&&(e+=`
       .splash-dots { display: flex; gap: 8px; margin-top: 16px; }
       .splash-dots span {
         width: 8px; height: 8px; border-radius: 50%;
@@ -100,7 +100,7 @@ import {useCallback}from'react';var v=p=>{let{theme:c,animation:s,meshColors:e,b
         0%, 80%, 100% { transform: scale(0.8); opacity: 0.5; }
         40% { transform: scale(1.2); opacity: 1; }
       }
-    `),s==="bars"&&(a+=`
+    `),t==="bars"&&(e+=`
       .splash-bars { display: flex; align-items: flex-end; gap: 6px; height: 28px; margin-top: 16px; }
       .splash-bars span {
         width: 6px; min-height: 8px; border-radius: 3px;
@@ -116,7 +116,7 @@ import {useCallback}from'react';var v=p=>{let{theme:c,animation:s,meshColors:e,b
         0%, 100% { transform: scaleY(0.4); }
         50% { transform: scaleY(1); }
       }
-    `),s==="spinner"&&(a+=`
+    `),t==="spinner"&&(e+=`
       .splash-spinner {
         margin-top: 16px; width: 32px; height: 32px;
         border: 3px solid currentColor; border-radius: 50%;
@@ -124,7 +124,7 @@ import {useCallback}from'react';var v=p=>{let{theme:c,animation:s,meshColors:e,b
         animation: splash-spinner 0.8s linear infinite;
       }
       @keyframes splash-spinner { to { transform: rotate(360deg); } }
-    `),s==="progress"&&(a+=`
+    `),t==="progress"&&(e+=`
       .splash-progress { margin-top: 16px; width: 120px; height: 4px; border-radius: 2px; background: currentColor; opacity: 0.2; overflow: hidden; }
       .splash-progress-bar {
         height: 100%; width: 30%; border-radius: 2px;
@@ -135,18 +135,18 @@ import {useCallback}from'react';var v=p=>{let{theme:c,animation:s,meshColors:e,b
         0% { transform: translateX(-100%); }
         100% { transform: translateX(433%); }
       }
-    `),s==="gradient-mesh"){let o=["#3498db","#9b59b6","#2ecc71"],i=e?.length?e:o,g=["center","20% 30%","80% 70%","40% 80%","70% 20%","10% 60%","90% 40%"],u=i.map((f,y)=>`radial-gradient(circle at ${g[y%g.length]}, ${f} 0%, transparent 50%)`).join(",");a+=`
+    `),t==="gradient-mesh"){let p=["#3498db","#9b59b6","#2ecc71"],c=a?.length?a:p,b=["center","20% 30%","80% 70%","40% 80%","70% 20%","10% 60%","90% 40%"],d=c.map((v,g)=>`radial-gradient(circle at ${b[g%b.length]}, ${v} 0%, transparent 50%)`).join(",");e+=`
       #vite-splash-screen::before {
         content: ""; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
-        background: ${u}; z-index: -1; animation: rotate-mesh 20s linear infinite;
+        background: ${d}; z-index: -1; animation: rotate-mesh 20s linear infinite;
         opacity: 0.3; filter: blur(60px);
       }
       @keyframes rotate-mesh { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-    `;}if(n&&n!=="none"){if(a+=`
+    `;}if(o&&o!=="none"){if(e+=`
       .splash-bg-layer {
         position: absolute; inset: 0; z-index: -1; pointer-events: none;
       }
-    `,n==="pulse"&&(a+=`
+    `,o==="pulse"&&(e+=`
         .splash-bg-layer {
           background: inherit; opacity: 0.85;
           animation: bg-pulse 2.5s ease-in-out infinite;
@@ -155,7 +155,7 @@ import {useCallback}from'react';var v=p=>{let{theme:c,animation:s,meshColors:e,b
           0%, 100% { opacity: 0.85; }
           50% { opacity: 1; }
         }
-      `),n==="breath"&&(a+=`
+      `),o==="breath"&&(e+=`
         .splash-bg-layer {
           background: inherit; opacity: 0.9;
           animation: bg-breath 4s ease-in-out infinite;
@@ -164,9 +164,9 @@ import {useCallback}from'react';var v=p=>{let{theme:c,animation:s,meshColors:e,b
           0%, 100% { opacity: 0.9; }
           50% { opacity: 1; }
         }
-      `),n==="gradient"){let o=t.background,i=r.background;a+=`
+      `),o==="gradient"){let p=i.background,c=r.background;e+=`
         .splash-bg-layer {
-          background: linear-gradient(135deg, ${o} 0%, ${i} 50%, ${o} 100%);
+          background: linear-gradient(135deg, ${p} 0%, ${c} 50%, ${p} 100%);
           background-size: 200% 200%;
           animation: bg-gradient 6s ease infinite;
         }
@@ -174,9 +174,9 @@ import {useCallback}from'react';var v=p=>{let{theme:c,animation:s,meshColors:e,b
           0%, 100% { background-position: 0% 50%; }
           50% { background-position: 100% 50%; }
         }
-      `;}if(n==="wave"){let o=t.background,i=r.background;a+=`
+      `;}if(o==="wave"){let p=i.background,c=r.background;e+=`
         .splash-bg-layer {
-          background: linear-gradient(90deg, ${o}, ${i}, ${o}, ${i});
+          background: linear-gradient(90deg, ${p}, ${c}, ${p}, ${c});
           background-size: 300% 100%;
           animation: bg-wave 4s ease-in-out infinite;
         }
@@ -184,43 +184,145 @@ import {useCallback}from'react';var v=p=>{let{theme:c,animation:s,meshColors:e,b
           0%, 100% { background-position: 0% 50%; }
           50% { background-position: 100% 50%; }
         }
-      `;}}return d==="chars"&&(a+=`
+      `;}}f==="chars"&&(e+=`
       .splash-text-chars { display: inline-flex; flex-wrap: wrap; justify-content: center; font-size: 1.2rem; font-weight: 500; }
       .splash-char { opacity: 0; animation: splash-char-in 0.4s ease-out forwards; }
       @keyframes splash-char-in {
         from { opacity: 0; transform: translateY(4px); }
         to { opacity: 1; transform: translateY(0); }
       }
-    `),`
+    `);let h=I(k);h&&(e+=`.splash-text { ${h}; }`),m?.type==="sequential-fill"&&(e+=`
+      .splash-logo svg [data-splash-fill],
+      .splash-logo svg [data-splash-stroke] {
+        transition-property: fill-opacity, stroke-opacity;
+        transition-timing-function: ease;
+      }
+    `);let y=m?.type==="sequential-fill"?".splash-logo svg { width: 100%; height: 100%; }":".splash-logo svg { fill: currentColor; width: 100%; height: 100%; }";return `
     #vite-splash-screen {
       position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
       display: flex; flex-direction: column; align-items: center; justify-content: center;
       z-index: 999999; transition: opacity 0.5s, visibility 0.5s;
       font-family: -apple-system, system-ui, sans-serif;
-      background-color: ${t.background}; color: ${t.color};
+      background-color: ${i.background}; color: ${i.color};
     }
     #vite-splash-screen.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
     .splash-logo { width: 120px; height: 120px; margin-bottom: 20px; }
-    .splash-logo svg { fill: currentColor; width: 100%; height: 100%; }
+    ${y}
     .splash-text { font-size: 1.2rem; font-weight: 500; }
     .splash-version { position: absolute; bottom: 20px; font-size: 0.8rem; opacity: 0.7; }
-    ${l}
-    ${a}
-  `.replace(/\s+/g," ").trim()};function O(){let p=useCallback(()=>{let s=document.getElementById("vite-splash-screen");s&&(s.classList.add("hidden"),setTimeout(()=>s.remove(),500));},[]),c=useCallback(s=>{try{s==="auto"?localStorage.removeItem("v-splash-theme"):localStorage.setItem("v-splash-theme",s);let e=document.getElementById("vite-splash-screen");e&&(e.classList.remove("theme-light","theme-dark"),s!=="auto"&&e.classList.add(`theme-${s}`));}catch{}},[]);return {hideSplashScreen:p,setSplashTheme:c}}function B(p){return {name:"vite-plugin-react-splash",transformIndexHtml(c){let s=v(p),{logo:e,text:n,version:d,duration:m=3e3,onlyStandalone:t=false,showOnce:r=false,showOnceStorage:a="session",showOnAppEnter:l=false,appScope:h,animation:o,backgroundAnimation:i,textAnimation:g="none",textCharDelay:u=50}=p,f=b=>b.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;"),y=typeof e=="string"?`<div class="splash-logo">${e}</div>`:`<div class="splash-logo splash-logo-light">${e.light}</div><div class="splash-logo splash-logo-dark">${e.dark}</div>`,x=o==="dots"?'<div class="splash-dots"><span></span><span></span><span></span></div>':"",w=o==="bars"?'<div class="splash-bars"><span></span><span></span><span></span><span></span><span></span></div>':"",$=o==="spinner"?'<div class="splash-spinner"></div>':"",S=o==="progress"?'<div class="splash-progress"><div class="splash-progress-bar"></div></div>':"",A=i&&i!=="none"?'<div class="splash-bg-layer"></div>':"",C=Array.isArray(h)?h:h?[h]:[],H=`
-<style>${s}</style>
+    ${n}
+    ${e}
+  `.replace(/\s+/g," ").trim()};function z(){let l=useCallback(()=>{let t=document.getElementById("vite-splash-screen");t&&(t.classList.add("hidden"),window.__viteSplashRestoreBody?.(),setTimeout(()=>t.remove(),500));},[]),s=useCallback(t=>{try{t==="auto"?localStorage.removeItem("v-splash-theme"):localStorage.setItem("v-splash-theme",t);let a=document.getElementById("vite-splash-screen");a&&(a.classList.remove("theme-light","theme-dark"),t!=="auto"&&a.classList.add(`theme-${t}`));}catch{}},[]);return {hideSplashScreen:l,setSplashTheme:s}}function _(l){return {name:"vite-plugin-react-splash",transformIndexHtml(s){let t=$(l),{logo:a,text:o,version:f,duration:k=3e3,onlyStandalone:m=false,showOnce:u=false,showOnceStorage:i="session",showOnAppEnter:r=false,appScope:e,animation:n,backgroundAnimation:h,textAnimation:y="none",textCharDelay:S=50,textClassName:p,svgAnimation:c,bodyAttributes:b,bodyClass:d}=l,v=x=>x.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;"),g=c?" splash-logo-animated":"",B=typeof a=="string"?`<div class="splash-logo${g}">${a}</div>`:`<div class="splash-logo splash-logo-light${g}">${a.light}</div><div class="splash-logo splash-logo-dark${g}">${a.dark}</div>`,w=["splash-text",y==="chars"?"splash-text-chars":"",p||""].filter(Boolean).join(" "),O=n==="dots"?'<div class="splash-dots"><span></span><span></span><span></span></div>':"",C=n==="bars"?'<div class="splash-bars"><span></span><span></span><span></span><span></span><span></span></div>':"",j=n==="spinner"?'<div class="splash-spinner"></div>':"",F=n==="progress"?'<div class="splash-progress"><div class="splash-progress-bar"></div></div>':"",L=h&&h!=="none"?'<div class="splash-bg-layer"></div>':"",D=Array.isArray(e)?e:e?[e]:[],H=`
+<style>${t}</style>
 <div id="vite-splash-screen">
-${A}
-${y}
-${n?g==="chars"?`<div class="splash-text splash-text-chars">${n.split("").map((b,Y)=>`<span class="splash-char" style="animation-delay:${Y*u}ms">${f(b)}</span>`).join("")}</div>`:`<div class="splash-text">${f(n)}</div>`:""}
-${x}
-${w}
-${$}
-${S}
-${d?`<div class="splash-version">v${d}</div>`:""}
+${L}
+${B}
+${o?y==="chars"?`<div class="${w}">${o.split("").map((x,Y)=>`<span class="splash-char" style="animation-delay:${Y*S}ms">${v(x)}</span>`).join("")}</div>`:`<div class="${w}">${v(o)}</div>`:""}
+${O}
+${C}
+${j}
+${F}
+${f?`<div class="splash-version">v${f}</div>`:""}
 </div>
 <script>
 (function(){
-  var d=${m},o=${t},s1=${r},ss=${JSON.stringify(a)},ae=${l},sc=${JSON.stringify(C)},s=document.getElementById('vite-splash-screen');
+  var d=${k},o=${m},s1=${u},ss=${JSON.stringify(i)},ae=${r},sc=${JSON.stringify(D)},ba=${JSON.stringify(b||{})},bc=${JSON.stringify(Array.isArray(d)?d:d?[d]:[])},sa=${JSON.stringify(c||null)},s=document.getElementById('vite-splash-screen');
+  var bodyBackup=null;
+  function applyBodyState(){
+    var b=document.body;
+    if(!b||(!bc.length&&!Object.keys(ba).length))return;
+    bodyBackup={attrs:{},addedClasses:[]};
+    for(var i=0;i<bc.length;i+=1){
+      var cls=bc[i];
+      if(!cls)continue;
+      if(!b.classList.contains(cls)){
+        b.classList.add(cls);
+        bodyBackup.addedClasses.push(cls);
+      }
+    }
+    for(var key in ba){
+      if(!Object.prototype.hasOwnProperty.call(ba,key))continue;
+      bodyBackup.attrs[key]=b.hasAttribute(key)?b.getAttribute(key):null;
+      b.setAttribute(key,ba[key]);
+    }
+  }
+  function restoreBodyState(){
+    if(!bodyBackup)return;
+    var b=document.body;
+    if(!b){bodyBackup=null;return;}
+    for(var i=0;i<bodyBackup.addedClasses.length;i+=1){
+      b.classList.remove(bodyBackup.addedClasses[i]);
+    }
+    for(var key in bodyBackup.attrs){
+      if(!Object.prototype.hasOwnProperty.call(bodyBackup.attrs,key))continue;
+      if(bodyBackup.attrs[key]===null)b.removeAttribute(key);
+      else b.setAttribute(key,bodyBackup.attrs[key]);
+    }
+    bodyBackup=null;
+  }
+  window.__viteSplashRestoreBody=restoreBodyState;
+  function getVisibleLogo(root){
+    var logos=root.querySelectorAll('.splash-logo');
+    for(var i=0;i<logos.length;i+=1){
+      if(window.getComputedStyle(logos[i]).display!=='none')return logos[i];
+    }
+    return logos[0]||null;
+  }
+  function initSvgFillAnimation(root,config){
+    if(!config||config.type!=='sequential-fill')return;
+    var logo=getVisibleLogo(root);
+    if(!logo)return;
+    var svg=logo.querySelector('svg');
+    if(!svg)return;
+    var direction=config.direction==='rtl'?'rtl':'ltr';
+    var stepDelay=typeof config.stepDelay==='number'?config.stepDelay:120;
+    var stepDuration=typeof config.stepDuration==='number'?config.stepDuration:350;
+    var target=config.target||'fill';
+    var animateFill=target==='fill'||target==='both';
+    var animateStroke=target==='stroke'||target==='both';
+    var selector='path,circle,rect,ellipse,polygon,polyline,line';
+    var elements=Array.prototype.slice.call(svg.querySelectorAll(selector));
+    if(!elements.length)return;
+    var items=[];
+    for(var i=0;i<elements.length;i+=1){
+      var el=elements[i];
+      var fill=el.getAttribute('fill');
+      var stroke=el.getAttribute('stroke');
+      var canFill=animateFill&&fill!=='none'&&window.getComputedStyle(el).fill!=='none';
+      var canStroke=animateStroke&&!!stroke&&stroke!=='none';
+      if(!canFill&&!canStroke)continue;
+      var box;
+      try{box=el.getBBox();}catch(e){continue;}
+      if(!box.width&&!box.height)continue;
+      items.push({el:el,x:box.x+box.width/2,canFill:canFill,canStroke:canStroke});
+    }
+    if(!items.length)return;
+    items.sort(function(a,b){return direction==='rtl'?b.x-a.x:a.x-b.x;});
+    for(var j=0;j<items.length;j+=1){
+      (function(item,index){
+        var animateFill=target==='fill'||target==='both';
+        var animateStroke=target==='stroke'||target==='both';
+        if(animateFill){
+          item.el.setAttribute('data-splash-fill','true');
+          item.el.style.fillOpacity='0';
+          item.el.style.transitionDuration=stepDuration+'ms';
+        }
+        if(animateStroke){
+          item.el.setAttribute('data-splash-stroke','true');
+          item.el.style.strokeOpacity='0';
+          item.el.style.transitionDuration=stepDuration+'ms';
+        }
+        setTimeout(function(){
+          if(animateFill)item.el.style.fillOpacity='1';
+          if(animateStroke)item.el.style.strokeOpacity='1';
+        },index*stepDelay);
+      })(items[j],j);
+    }
+  }
+  function removeSplash(){
+    restoreBodyState();
+    if(s)s.remove();
+  }
   if(s){
     var st; try { st = localStorage.getItem('v-splash-theme'); } catch (e) {}
     if (st === 'light' || st === 'dark') s.classList.add('theme-' + st);
@@ -256,14 +358,16 @@ ${d?`<div class="splash-version">v${d}</div>`:""}
     try { shown = storage.getItem('v-splash-shown'); } catch (e) {}
     if((o && !isPWA) || isHistoryNavigation || (ae && cameFromSameApp) || (s1 && shown)){
       s.style.display='none';
-      s.remove();
+      removeSplash();
       return;
     }
+    applyBodyState();
+    initSvgFillAnimation(s,sa);
     if(s1) { try { storage.setItem('v-splash-shown', 'true'); } catch (e) {} }
     setTimeout(function(){
       s.classList.add('hidden');
-      setTimeout(function(){s.remove()},500);
+      setTimeout(removeSplash,500);
     },d);
   }
 })();
-</script>`.replace(/>\s+</g,"><").trim();return c.replace("<body>",`<body>${H}`)}}}export{O as useSplashScreen,B as viteSplashScreen};
+</script>`.replace(/>\s+</g,"><").trim();return s.replace(/<body([^>]*)>/i,`<body$1>${H}`)}}}export{z as useSplashScreen,_ as viteSplashScreen};

@@ -1,7 +1,27 @@
 import { SplashScreenOptions } from './types';
 
+const styleObjectToCss = (style?: Record<string, string | number | undefined>): string => {
+  if (!style) return '';
+  return Object.entries(style)
+    .filter(([, value]) => value !== undefined && value !== '')
+    .map(([key, value]) => {
+      const prop = key.includes('-') ? key : key.replace(/[A-Z]/g, (m) => `-${m.toLowerCase()}`);
+      return `${prop}:${value}`;
+    })
+    .join(';');
+};
+
 export const generateStyles = (options: SplashScreenOptions) => {
-  const { theme, animation, meshColors, backgroundAnimation, textAnimation, mode = 'auto' } = options;
+  const {
+    theme,
+    animation,
+    meshColors,
+    backgroundAnimation,
+    textAnimation,
+    textStyle,
+    svgAnimation,
+    mode = 'auto',
+  } = options;
   const light = theme?.light || { background: '#ffffff', color: '#000000' };
   const dark = theme?.dark || { background: '#000000', color: '#ffffff' };
 
@@ -292,6 +312,25 @@ export const generateStyles = (options: SplashScreenOptions) => {
     `;
   }
 
+  const textInlineStyle = styleObjectToCss(textStyle);
+  if (textInlineStyle) {
+    extraStyles += `.splash-text { ${textInlineStyle}; }`;
+  }
+
+  if (svgAnimation?.type === 'sequential-fill') {
+    extraStyles += `
+      .splash-logo svg [data-splash-fill],
+      .splash-logo svg [data-splash-stroke] {
+        transition-property: fill-opacity, stroke-opacity;
+        transition-timing-function: ease;
+      }
+    `;
+  }
+
+  const logoSvgFillRule = svgAnimation?.type === 'sequential-fill'
+    ? '.splash-logo svg { width: 100%; height: 100%; }'
+    : '.splash-logo svg { fill: currentColor; width: 100%; height: 100%; }';
+
   const css = `
     #vite-splash-screen {
       position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
@@ -302,7 +341,7 @@ export const generateStyles = (options: SplashScreenOptions) => {
     }
     #vite-splash-screen.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
     .splash-logo { width: 120px; height: 120px; margin-bottom: 20px; }
-    .splash-logo svg { fill: currentColor; width: 100%; height: 100%; }
+    ${logoSvgFillRule}
     .splash-text { font-size: 1.2rem; font-weight: 500; }
     .splash-version { position: absolute; bottom: 20px; font-size: 0.8rem; opacity: 0.7; }
     ${themeStyles}

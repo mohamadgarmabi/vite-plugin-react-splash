@@ -1,10 +1,17 @@
 import { useCallback } from 'react';
 
+declare global {
+  interface Window {
+    __viteSplashRestoreBody?: () => void;
+  }
+}
+
 export function useSplashScreen() {
   const hideSplashScreen = useCallback(() => {
     const s = document.getElementById('vite-splash-screen');
     if (s) {
       s.classList.add('hidden');
+      window.__viteSplashRestoreBody?.();
       setTimeout(() => s.remove(), 500);
     }
   }, []);
