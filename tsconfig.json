@@ -2,7 +2,7 @@
   "compilerOptions": {
     "target": "ESNext",
     "module": "ESNext",
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "declaration": true,
     "strict": true,
     "esModuleInterop": true,
@@ -10,6 +10,6 @@
     "forceConsistentCasingInFileNames": true,
     "jsx": "react-jsx"
   },
-  "include": ["src"]
+  "include": ["src", "test", "playground", "vitest.config.ts"]
 }
 
