@@ -1,7 +1,7 @@
 {
   "name": "vite-plugin-react-splash",
-  "version": "1.0.10",
-  "description": "A Vite plugin and React hook for easy splash screen management in React apps.",
+  "version": "1.0.11",
+  "description": "Vite plugin + React hook for splash screens and loading screens in React apps and PWAs. Light/dark themes, animations, show-once, and standalone mode.",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
@@ -14,11 +14,16 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/mohamadgarmabi/vite-plugin-react-splash.git"
+    "url": "git+https://github.com/mohamadgarmabi/vite-plugin-react-splash.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mohamadgarmabi/vite-plugin-react-splash/issues"
   },
   "homepage": "https://github.com/mohamadgarmabi/vite-plugin-react-splash#readme",
   "files": [
-    "dist"
+    "dist",
+    "LICENSE",
+    "README.md"
   ],
   "scripts": {
     "build": "tsup src/index.ts --format cjs,esm --minify --clean --dts --treeshake --target es2020",
@@ -33,12 +38,49 @@
   "keywords": [
     "vite",
     "vite-plugin",
+    "vite plugin",
     "react",
+    "reactjs",
+    "splash",
     "splash-screen",
-    "loading"
+    "splash screen",
+    "loading",
+    "loading-screen",
+    "loading screen",
+    "boot-screen",
+    "launch-screen",
+    "intro-screen",
+    "pwa",
+    "progressive-web-app",
+    "standalone",
+    "theme",
+    "dark-mode",
+    "light-mode",
+    "animation",
+    "svg-animation",
+    "html-injection",
+    "react-hook",
+    "useSplashScreen",
+    "vite-react",
+    "frontend",
+    "ui"
   ],
-  "author": "",
+  "author": {
+    "name": "Mohammad Garmabi",
+    "email": "mwmdgmb@gmail.com",
+    "url": "https://github.com/mohamadgarmabi"
+  },
+  "contributors": [
+    {
+      "name": "Mohammad Garmabi",
+      "email": "mwmdgmb@gmail.com",
+      "url": "https://github.com/mohamadgarmabi"
+    }
+  ],
   "license": "MIT",
+  "engines": {
+    "node": ">=16"
+  },
   "peerDependencies": {
     "react": ">=16.8.0",
     "vite": ">=2.0.0"
