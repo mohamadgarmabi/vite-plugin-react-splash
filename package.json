@@ -1,7 +1,7 @@
 {
   "name": "vite-plugin-react-splash",
-  "version": "1.0.13",
-  "description": "Vite plugin + React hook for splash screens and loading screens in React apps and PWAs. Light/dark themes, animations, show-once, and standalone mode.",
+  "version": "1.1.0",
+  "description": "Fast Vite splash screen plugin for React PWAs — critical CSS for better FCP/LCP, progress API, prefers-reduced-motion, waitUntilReady, light/dark themes.",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
@@ -32,6 +32,7 @@
     "lint": "eslint src",
     "test": "vitest run",
     "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
     "playground": "vite playground --config playground/vite.config.ts",
     "typecheck": "tsc --noEmit"
   },
@@ -39,6 +40,7 @@
     "vite",
     "vite-plugin",
     "vite plugin",
+    "vite-plugin-splash",
     "react",
     "reactjs",
     "splash",
@@ -48,6 +50,7 @@
     "loading-screen",
     "loading screen",
     "boot-screen",
+    "bootloader",
     "launch-screen",
     "intro-screen",
     "pwa",
@@ -63,7 +66,15 @@
     "useSplashScreen",
     "vite-react",
     "frontend",
-    "ui"
+    "ui",
+    "fcp",
+    "lcp",
+    "core-web-vitals",
+    "critical-css",
+    "prefers-reduced-motion",
+    "progress-bar",
+    "waitUntilReady",
+    "minDuration"
   ],
   "author": {
     "name": "Mohammad Garmabi",
@@ -91,6 +102,7 @@
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.3.0",
     "@vitejs/plugin-react": "^4.3.4",
+    "@vitest/coverage-v8": "3.2.7",
     "jsdom": "^30.0.1",
     "react": "^18.0.0",
     "react-dom": "^18.3.1",

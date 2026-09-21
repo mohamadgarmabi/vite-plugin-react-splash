@@ -1,27 +1,61 @@
 import { useSplashScreen } from '../../src/hook';
 
 const App = () => {
-  const { hideSplashScreen, setSplashTheme } = useSplashScreen();
+  const { hideSplashScreen, setSplashTheme, setProgress } = useSplashScreen();
 
   return (
     <main style={styles.page}>
       <section style={styles.panel}>
         <h1 style={styles.title}>Splash Playground</h1>
         <p style={styles.copy}>
-          Use these controls to exercise the plugin and hook while the splash screen is visible.
+          waitUntilReady is on — hide via button or setProgress(100). minDuration is
+          400ms. Critical CSS is in head for faster FCP.
         </p>
 
         <div style={styles.actions}>
           <button type="button" style={styles.button} onClick={hideSplashScreen}>
             Hide splash
           </button>
-          <button type="button" style={styles.button} onClick={() => setSplashTheme('light')}>
+          <button
+            type="button"
+            style={styles.button}
+            onClick={() => setProgress(30)}
+          >
+            Progress 30%
+          </button>
+          <button
+            type="button"
+            style={styles.button}
+            onClick={() => setProgress(70)}
+          >
+            Progress 70%
+          </button>
+          <button
+            type="button"
+            style={styles.button}
+            onClick={() => setProgress(100)}
+          >
+            Progress 100% (hide)
+          </button>
+          <button
+            type="button"
+            style={styles.button}
+            onClick={() => setSplashTheme('light')}
+          >
             Theme: light
           </button>
-          <button type="button" style={styles.button} onClick={() => setSplashTheme('dark')}>
+          <button
+            type="button"
+            style={styles.button}
+            onClick={() => setSplashTheme('dark')}
+          >
             Theme: dark
           </button>
-          <button type="button" style={styles.button} onClick={() => setSplashTheme('auto')}>
+          <button
+            type="button"
+            style={styles.button}
+            onClick={() => setSplashTheme('auto')}
+          >
             Theme: auto
           </button>
         </div>

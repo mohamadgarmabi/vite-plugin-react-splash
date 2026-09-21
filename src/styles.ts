@@ -1,17 +1,17 @@
-import { SplashScreenOptions } from './types';
+import type { SplashScreenOptions, SplashTextStyle } from './types';
 
-const styleObjectToCss = (style?: Record<string, string | number | undefined>): string => {
+const styleObjectToCss = (style?: SplashTextStyle): string => {
   if (!style) return '';
   return Object.entries(style)
     .filter(([, value]) => value !== undefined && value !== '')
     .map(([key, value]) => {
-      const prop = key.includes('-') ? key : key.replace(/[A-Z]/g, (m) => `-${m.toLowerCase()}`);
+      const prop = key.replace(/[A-Z]/g, (match) => `-${match.toLowerCase()}`);
       return `${prop}:${value}`;
     })
     .join(';');
 };
 
-export const generateStyles = (options: SplashScreenOptions) => {
+const generateStyles = (options: SplashScreenOptions): string => {
   const {
     theme,
     animation,
@@ -21,6 +21,8 @@ export const generateStyles = (options: SplashScreenOptions) => {
     textStyle,
     svgAnimation,
     mode = 'auto',
+    respectReducedMotion = true,
+    progress = false,
   } = options;
   const light = theme?.light || { background: '#ffffff', color: '#000000' };
   const dark = theme?.dark || { background: '#000000', color: '#ffffff' };
@@ -205,19 +207,32 @@ export const generateStyles = (options: SplashScreenOptions) => {
     `;
   }
 
-  if (animation === 'progress') {
+  const showProgress = progress || animation === 'progress';
+  if (showProgress) {
     extraStyles += `
       .splash-progress { margin-top: 16px; width: 120px; height: 4px; border-radius: 2px; background: currentColor; opacity: 0.2; overflow: hidden; }
       .splash-progress-bar {
-        height: 100%; width: 30%; border-radius: 2px;
+        height: 100%; width: 100%; border-radius: 2px;
         background: currentColor; opacity: 0.9;
-        animation: splash-progress 1.5s ease-in-out infinite;
-      }
-      @keyframes splash-progress {
-        0% { transform: translateX(-100%); }
-        100% { transform: translateX(433%); }
+        transform-origin: left center;
+        transform: scaleX(0);
+        will-change: transform;
+        transition: transform 0.2s ease-out;
       }
     `;
+    if (animation === 'progress' && !progress) {
+      extraStyles += `
+        .splash-progress-bar {
+          animation: splash-progress 1.5s ease-in-out infinite;
+          width: 30%;
+          transform: none;
+        }
+        @keyframes splash-progress {
+          0% { transform: translateX(-100%); }
+          100% { transform: translateX(433%); }
+        }
+      `;
+    }
   }
 
   if (animation === 'gradient-mesh') {
@@ -331,6 +346,29 @@ export const generateStyles = (options: SplashScreenOptions) => {
     ? '.splash-logo svg { width: 100%; height: 100%; }'
     : '.splash-logo svg { fill: currentColor; width: 100%; height: 100%; }';
 
+  const reducedMotionStyles = respectReducedMotion
+    ? `
+    @media (prefers-reduced-motion: reduce) {
+      #vite-splash-screen, #vite-splash-screen * {
+        animation: none !important;
+        transition: none !important;
+      }
+      #vite-splash-screen.hidden {
+        transition: opacity 0.01s, visibility 0.01s;
+      }
+      .splash-char { opacity: 1 !important; transform: none !important; }
+    }
+    #vite-splash-screen.splash-reduced-motion,
+    #vite-splash-screen.splash-reduced-motion * {
+      animation: none !important;
+    }
+    #vite-splash-screen.splash-reduced-motion .splash-char {
+      opacity: 1 !important;
+      transform: none !important;
+    }
+  `
+    : '';
+
   const css = `
     #vite-splash-screen {
       position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
@@ -346,8 +384,11 @@ export const generateStyles = (options: SplashScreenOptions) => {
     .splash-version { position: absolute; bottom: 20px; font-size: 0.8rem; opacity: 0.7; }
     ${themeStyles}
     ${extraStyles}
+    ${reducedMotionStyles}
   `;
 
   return css.replace(/\s+/g, ' ').trim();
 };
+
+export { generateStyles };
 

@@ -1,4 +1,53 @@
-export interface SplashTextStyle {
+type SplashThemeMode = 'light' | 'dark' | 'auto';
+
+type SplashTextAnimation = 'none' | 'chars';
+
+type SplashShowOnceStorage = 'session' | 'local';
+
+type SplashBackgroundAnimation =
+  | 'none'
+  | 'pulse'
+  | 'breath'
+  | 'gradient'
+  | 'wave';
+
+type SplashAnimation =
+  | 'none'
+  | 'fade'
+  | 'pulse'
+  | 'slide-up'
+  | 'gradient-mesh'
+  | 'spin'
+  | 'bounce'
+  | 'shimmer'
+  | 'ripple'
+  | 'dots'
+  | 'bars'
+  | 'spinner'
+  | 'progress';
+
+type SplashSvgFillTarget = 'fill' | 'stroke' | 'both';
+
+type SplashSvgFillDirection = 'ltr' | 'rtl';
+
+interface SplashThemeColors {
+  background: string;
+  color: string;
+}
+
+interface SplashTheme {
+  light: SplashThemeColors;
+  dark: SplashThemeColors;
+}
+
+interface SplashLogoPair {
+  light: string;
+  dark: string;
+}
+
+type SplashLogo = string | SplashLogoPair;
+
+interface SplashTextStyle {
   fontSize?: string;
   fontWeight?: string | number;
   color?: string;
@@ -8,72 +57,91 @@ export interface SplashTextStyle {
   letterSpacing?: string;
   lineHeight?: string | number;
   textAlign?: 'left' | 'center' | 'right';
-  /** Any additional CSS properties (camelCase or kebab-case) */
-  [key: string]: string | number | undefined;
+  fontFamily?: string;
+  textTransform?: string;
+  whiteSpace?: string;
 }
 
-export interface SplashSvgFillAnimation {
+interface SplashSvgFillAnimation {
   type: 'sequential-fill';
-  /** Fill order: left-to-right (default) or right-to-left */
-  direction?: 'ltr' | 'rtl';
-  /** Delay in ms before each SVG element starts filling (default 120) */
+  direction?: SplashSvgFillDirection;
   stepDelay?: number;
-  /** Duration in ms for each element fill transition (default 350) */
   stepDuration?: number;
-  /** Animate fill opacity, stroke opacity, or both (default 'fill') */
-  target?: 'fill' | 'stroke' | 'both';
+  target?: SplashSvgFillTarget;
 }
 
-export interface SplashScreenOptions {
-  logo: string | { light: string; dark: string }; // SVG string or URL
-  duration?: number; // Duration in milliseconds
-  text?: string; // Text to display below the logo
-  textAnimation?: 'none' | 'chars'; // Reveal text all at once or character by character
-  textCharDelay?: number; // Delay in ms between each character (default 50), used when textAnimation is 'chars'
-  textClassName?: string; // Extra CSS class(es) for the description text
-  textStyle?: SplashTextStyle; // Inline styles for the description text below the logo
-  /** Sequential SVG fill animation (path by path, left-to-right or right-to-left) */
+interface SplashScreenOptions {
+  logo: SplashLogo;
+  duration?: number;
+  text?: string;
+  textAnimation?: SplashTextAnimation;
+  textCharDelay?: number;
+  textClassName?: string;
+  textStyle?: SplashTextStyle;
   svgAnimation?: SplashSvgFillAnimation;
-  /** Attributes merged onto `<body>` while splash is visible (existing attrs are preserved and restored on hide) */
   bodyAttributes?: Record<string, string>;
-  /** Class name(s) added to `<body>` while splash is visible (merged with existing classes) */
   bodyClass?: string | string[];
-  version?: string; // Version to display at the bottom
-  theme?: {
-    light: {
-      background: string;
-      color: string;
-    };
-    dark: {
-      background: string;
-      color: string;
-    };
-  };
-  mode?: 'light' | 'dark' | 'auto'; // Manual override or auto-detection (default: 'auto')
-  animation?:
-    | 'none'
-    | 'fade'
-    | 'pulse'
-    | 'slide-up'
-    | 'gradient-mesh'
-    | 'spin'
-    | 'bounce'
-    | 'shimmer'
-    | 'ripple'
-    | 'dots'
-    | 'bars'
-    | 'spinner'
-    | 'progress'; // Loading animation
-  meshColors?: string[]; // Custom colors for gradient-mesh animation
-  backgroundAnimation?:
-    | 'none'
-    | 'pulse'
-    | 'breath'
-    | 'gradient'
-    | 'wave'; // Background color animation
-  onlyStandalone?: boolean; // Only show in PWA standalone mode
-  showOnce?: boolean; // Only show once per storage scope
-  showOnceStorage?: 'session' | 'local'; // Keep splash hidden for the current tab session or across browser restarts
-  showOnAppEnter?: boolean; // Only show when navigation enters this app from outside its scope
-  appScope?: string | string[]; // Path prefix(es) that belong to the current app, e.g. '/dealer'
+  version?: string;
+  theme?: SplashTheme;
+  mode?: SplashThemeMode;
+  animation?: SplashAnimation;
+  meshColors?: string[];
+  backgroundAnimation?: SplashBackgroundAnimation;
+  onlyStandalone?: boolean;
+  showOnce?: boolean;
+  showOnceStorage?: SplashShowOnceStorage;
+  showOnAppEnter?: boolean;
+  appScope?: string | string[];
+  respectReducedMotion?: boolean;
+  waitUntilReady?: boolean;
+  minDuration?: number;
+  progress?: boolean;
 }
+
+interface UseSplashScreenResult {
+  hideSplashScreen: () => void;
+  setSplashTheme: (theme: SplashThemeMode) => void;
+  setProgress: (value: number) => void;
+}
+
+interface ViteSplashWindowApi {
+  __viteSplashRestoreBody?: () => void;
+  __viteSplashHide?: () => void;
+  __viteSplashSetProgress?: (value: number) => void;
+}
+
+interface RuntimeConfig {
+  duration: number;
+  onlyStandalone: boolean;
+  showOnce: boolean;
+  showOnceStorage: SplashShowOnceStorage;
+  showOnAppEnter: boolean;
+  appScopes: string[];
+  bodyAttributes: Record<string, string>;
+  bodyClasses: string[];
+  svgAnimation: SplashSvgFillAnimation | null;
+  respectReducedMotion: boolean;
+  waitUntilReady: boolean;
+  minDuration: number;
+  progress: boolean;
+}
+
+export type {
+  SplashThemeMode,
+  SplashTextAnimation,
+  SplashShowOnceStorage,
+  SplashBackgroundAnimation,
+  SplashAnimation,
+  SplashSvgFillTarget,
+  SplashSvgFillDirection,
+  SplashThemeColors,
+  SplashTheme,
+  SplashLogoPair,
+  SplashLogo,
+  SplashTextStyle,
+  SplashSvgFillAnimation,
+  SplashScreenOptions,
+  UseSplashScreenResult,
+  ViteSplashWindowApi,
+  RuntimeConfig,
+};
