@@ -68,6 +68,14 @@ describe('generateStyles', () => {
     expect(css).toContain('font-family:serif');
   });
 
+  it('adds gooey text styles with reduced-motion filter override', () => {
+    const css = generateStyles({ logo: '<svg></svg>', textAnimation: 'gooey' });
+    expect(css).toContain('filter: url(#vite-splash-gooey)');
+    expect(css).toContain('@keyframes splash-gooey-slide');
+    expect(css).toContain('.splash-reduced-motion .splash-text-gooey { filter: none !important; }');
+    expect(generateStyles({ logo: '<svg></svg>' })).not.toContain('splash-gooey-slide');
+  });
+
   it('ignores empty textStyle values', () => {
     const css = generateStyles({
       logo: '<svg></svg>',

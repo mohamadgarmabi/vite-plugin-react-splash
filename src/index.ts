@@ -29,7 +29,7 @@ const viteSplashScreen = (options: SplashScreenOptions): Plugin => {
       const styles = generateStyles(options);
       const markup = buildSplashMarkup(options);
       const script = createRuntimeScript(options);
-      const bodyContent = `${markup}${script}`.replace(/>\s+</g, '><').trim();
+      const bodyContent = `${markup}${script}`.replace(/>\s*\n\s*</g, '><').trim();
 
       const withHead = injectCriticalCss(html, styles);
       return injectBodySplash(withHead, bodyContent);

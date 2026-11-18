@@ -32,6 +32,7 @@ const buildSplashMarkup = (options: SplashScreenOptions): string => {
   const textClasses = [
     'splash-text',
     textAnimation === 'chars' ? 'splash-text-chars' : '',
+    textAnimation === 'gooey' ? 'splash-text-gooey' : '',
     textClassName || '',
   ]
     .filter(Boolean)
@@ -56,17 +57,33 @@ const buildSplashMarkup = (options: SplashScreenOptions): string => {
       ? '<div class="splash-bg-layer"></div>'
       : '';
 
-  const textHtml = text
-    ? textAnimation === 'chars'
-      ? `<div class="${textClasses}">${text
+  // Gooey: letters start spread (up to ±40px) and slide together through a blur + alpha-threshold
+  // filter so they melt into each other; the blur then animates to 0 for a crisp wordmark.
+  const mid = text ? (text.length - 1) / 2 : 0;
+  // Stagger 40ms per letter, capped at 200ms total so every letter lands before the blur resolves (~1.1s).
+  const step = Math.min(40, 200 / Math.max(mid * 2, 1));
+  const gooeyFilter =
+    '<svg width="0" height="0" style="position:absolute" aria-hidden="true"><filter id="vite-splash-gooey" x="-50%" y="-50%" width="200%" height="200%" color-interpolation-filters="sRGB"><feGaussianBlur stdDeviation="8"><animate attributeName="stdDeviation" values="8;0" begin="0.7s" dur="0.4s" fill="freeze"/></feGaussianBlur><feColorMatrix values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 20 -8"/></filter></svg>';
+
+  const textHtml = !text
+    ? ''
+    : textAnimation === 'gooey'
+      ? `${gooeyFilter}<div class="${textClasses}" role="img" aria-label="${escapeHtml(text)}">${text
           .split('')
           .map(
             (char, i) =>
-              `<span class="splash-char" style="animation-delay:${i * textCharDelay}ms">${escapeHtml(char)}</span>`
+              `<span class="splash-gooey-char" style="--d:${150 + Math.round(i * step)}ms;--dx:${Math.round(((i - mid) / Math.max(mid, 1)) * 40)}px">${escapeHtml(char)}</span>`
           )
           .join('')}</div>`
-      : `<div class="${textClasses}">${escapeHtml(text)}</div>`
-    : '';
+      : textAnimation === 'chars'
+        ? `<div class="${textClasses}">${text
+            .split('')
+            .map(
+              (char, i) =>
+                `<span class="splash-char" style="animation-delay:${i * textCharDelay}ms">${escapeHtml(char)}</span>`
+            )
+            .join('')}</div>`
+        : `<div class="${textClasses}">${escapeHtml(text)}</div>`;
 
   return `
 <div id="vite-splash-screen">
@@ -78,7 +95,7 @@ ${barsHtml}
 ${spinnerHtml}
 ${progressHtml}
 ${version ? `<div class="splash-version">v${version}</div>` : ''}
-</div>`.replace(/>\s+</g, '><').trim();
+</div>`.replace(/>\s*\n\s*</g, '><').trim();
 };
 
 export { buildSplashMarkup };

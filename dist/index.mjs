@@ -1,4 +1,4 @@
-import {useCallback}from'react';var R=e=>e?Object.entries(e).filter(([,r])=>r!==void 0&&r!=="").map(([r,t])=>`${r.replace(/[A-Z]/g,a=>`-${a.toLowerCase()}`)}:${t}`).join(";"):"",$=e=>{let{theme:r,animation:t,meshColors:i,backgroundAnimation:a,textAnimation:l,textStyle:p,svgAnimation:c,mode:m="auto",respectReducedMotion:u=true,progress:g=false}=e,o=r?.light||{background:"#ffffff",color:"#000000"},n=r?.dark||{background:"#000000",color:"#ffffff"},s="",d="";if(m==="light"?d=`
+import {useCallback}from'react';var R=e=>e?Object.entries(e).filter(([,r])=>r!==void 0&&r!=="").map(([r,t])=>`${r.replace(/[A-Z]/g,a=>`-${a.toLowerCase()}`)}:${t}`).join(";"):"",O=e=>{let{theme:r,animation:t,meshColors:i,backgroundAnimation:a,textAnimation:p,textStyle:l,svgAnimation:c,mode:m="auto",respectReducedMotion:u=true,progress:g=false}=e,o=r?.light||{background:"#ffffff",color:"#000000"},n=r?.dark||{background:"#000000",color:"#ffffff"},s="",d="";if(m==="light"?d=`
       #vite-splash-screen { background-color: ${o.background}; color: ${o.color}; }
       .splash-logo-light { display: block; }
       .splash-logo-dark { display: none; }
@@ -144,10 +144,10 @@ import {useCallback}from'react';var R=e=>e?Object.entries(e).filter(([,r])=>r!==
           0% { transform: translateX(-100%); }
           100% { transform: translateX(433%); }
         }
-      `)),t==="gradient-mesh"){let h=["#3498db","#9b59b6","#2ecc71"],f=i?.length?i:h,b=["center","20% 30%","80% 70%","40% 80%","70% 20%","10% 60%","90% 40%"],C=f.map((H,M)=>`radial-gradient(circle at ${b[M%b.length]}, ${H} 0%, transparent 50%)`).join(",");s+=`
+      `)),t==="gradient-mesh"){let h=["#3498db","#9b59b6","#2ecc71"],f=i?.length?i:h,x=["center","20% 30%","80% 70%","40% 80%","70% 20%","10% 60%","90% 40%"],$=f.map((b,y)=>`radial-gradient(circle at ${x[y%x.length]}, ${b} 0%, transparent 50%)`).join(",");s+=`
       #vite-splash-screen::before {
         content: ""; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
-        background: ${C}; z-index: -1; animation: rotate-mesh 20s linear infinite;
+        background: ${$}; z-index: -1; animation: rotate-mesh 20s linear infinite;
         opacity: 0.3; filter: blur(60px);
       }
       @keyframes rotate-mesh { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
@@ -193,20 +193,35 @@ import {useCallback}from'react';var R=e=>e?Object.entries(e).filter(([,r])=>r!==
           0%, 100% { background-position: 0% 50%; }
           50% { background-position: 100% 50%; }
         }
-      `;}}l==="chars"&&(s+=`
+      `;}}p==="chars"&&(s+=`
       .splash-text-chars { display: inline-flex; flex-wrap: wrap; justify-content: center; font-size: 1.2rem; font-weight: 500; }
       .splash-char { opacity: 0; animation: splash-char-in 0.4s ease-out forwards; }
       @keyframes splash-char-in {
         from { opacity: 0; transform: translateY(4px); }
         to { opacity: 1; transform: translateY(0); }
       }
-    `);let y=R(p);y&&(s+=`.splash-text { ${y}; }`),c?.type==="sequential-fill"&&(s+=`
+    `),p==="gooey"&&(s+=`
+      .splash-text-gooey {
+        display: inline-flex; font-size: 2.5rem; font-weight: 700; white-space: pre;
+        filter: url(#vite-splash-gooey);
+        animation: splash-gooey-off 0s 1.1s forwards;
+      }
+      .splash-gooey-char {
+        display: inline-block;
+        animation:
+          splash-gooey-fade 0.25s ease-out both,
+          splash-gooey-slide 0.75s cubic-bezier(0.34, 1.4, 0.64, 1) var(--d) both;
+      }
+      @keyframes splash-gooey-fade { from { opacity: 0; } }
+      @keyframes splash-gooey-slide { from { transform: translateX(var(--dx)) scale(0.6); } }
+      @keyframes splash-gooey-off { to { filter: none; } }
+    `);let v=R(l);v&&(s+=`.splash-text { ${v}; }`),c?.type==="sequential-fill"&&(s+=`
       .splash-logo svg [data-splash-fill],
       .splash-logo svg [data-splash-stroke] {
         transition-property: fill-opacity, stroke-opacity;
         transition-timing-function: ease;
       }
-    `);let v=c?.type==="sequential-fill"?".splash-logo svg { width: 100%; height: 100%; }":".splash-logo svg { fill: currentColor; width: 100%; height: 100%; }",k=u?`
+    `);let S=c?.type==="sequential-fill"?".splash-logo svg { width: 100%; height: 100%; }":".splash-logo svg { fill: currentColor; width: 100%; height: 100%; }",w=u?`
     @media (prefers-reduced-motion: reduce) {
       #vite-splash-screen, #vite-splash-screen * {
         animation: none !important;
@@ -216,6 +231,7 @@ import {useCallback}from'react';var R=e=>e?Object.entries(e).filter(([,r])=>r!==
         transition: opacity 0.01s, visibility 0.01s;
       }
       .splash-char { opacity: 1 !important; transform: none !important; }
+      .splash-text-gooey { filter: none !important; }
     }
     #vite-splash-screen.splash-reduced-motion,
     #vite-splash-screen.splash-reduced-motion * {
@@ -225,6 +241,7 @@ import {useCallback}from'react';var R=e=>e?Object.entries(e).filter(([,r])=>r!==
       opacity: 1 !important;
       transform: none !important;
     }
+    #vite-splash-screen.splash-reduced-motion .splash-text-gooey { filter: none !important; }
   `:"";return `
     #vite-splash-screen {
       position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
@@ -235,25 +252,25 @@ import {useCallback}from'react';var R=e=>e?Object.entries(e).filter(([,r])=>r!==
     }
     #vite-splash-screen.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
     .splash-logo { width: 120px; height: 120px; margin-bottom: 20px; }
-    ${v}
+    ${S}
     .splash-text { font-size: 1.2rem; font-weight: 500; }
     .splash-version { position: absolute; bottom: 20px; font-size: 0.8rem; opacity: 0.7; }
     ${d}
     ${s}
-    ${k}
-  `.replace(/\s+/g," ").trim()};var A=e=>e.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;"),B=e=>{let{logo:r,text:t,version:i,animation:a,backgroundAnimation:l,textAnimation:p="none",textCharDelay:c=50,textClassName:m,svgAnimation:u,progress:g=false}=e,o=g||a==="progress",n=u?" splash-logo-animated":"",s=typeof r=="string"?`<div class="splash-logo${n}">${r}</div>`:`<div class="splash-logo splash-logo-light${n}">${r.light}</div><div class="splash-logo splash-logo-dark${n}">${r.dark}</div>`,d=["splash-text",p==="chars"?"splash-text-chars":"",m||""].filter(Boolean).join(" "),w=a==="dots"?'<div class="splash-dots"><span></span><span></span><span></span></div>':"",y=a==="bars"?'<div class="splash-bars"><span></span><span></span><span></span><span></span><span></span></div>':"",v=a==="spinner"?'<div class="splash-spinner"></div>':"",k=o?'<div class="splash-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="splash-progress-bar" style="transform:scaleX(0)"></div></div>':"",x=l&&l!=="none"?'<div class="splash-bg-layer"></div>':"",h=t?p==="chars"?`<div class="${d}">${t.split("").map((f,b)=>`<span class="splash-char" style="animation-delay:${b*c}ms">${A(f)}</span>`).join("")}</div>`:`<div class="${d}">${A(t)}</div>`:"";return `
+    ${w}
+  `.replace(/\s+/g," ").trim()};var k=e=>e.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;"),M=e=>{let{logo:r,text:t,version:i,animation:a,backgroundAnimation:p,textAnimation:l="none",textCharDelay:c=50,textClassName:m,svgAnimation:u,progress:g=false}=e,o=g||a==="progress",n=u?" splash-logo-animated":"",s=typeof r=="string"?`<div class="splash-logo${n}">${r}</div>`:`<div class="splash-logo splash-logo-light${n}">${r.light}</div><div class="splash-logo splash-logo-dark${n}">${r.dark}</div>`,d=["splash-text",l==="chars"?"splash-text-chars":"",l==="gooey"?"splash-text-gooey":"",m||""].filter(Boolean).join(" "),B=a==="dots"?'<div class="splash-dots"><span></span><span></span><span></span></div>':"",v=a==="bars"?'<div class="splash-bars"><span></span><span></span><span></span><span></span><span></span></div>':"",S=a==="spinner"?'<div class="splash-spinner"></div>':"",w=o?'<div class="splash-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="splash-progress-bar" style="transform:scaleX(0)"></div></div>':"",C=p&&p!=="none"?'<div class="splash-bg-layer"></div>':"",h=t?(t.length-1)/2:0,f=Math.min(40,200/Math.max(h*2,1)),$=t?l==="gooey"?`<svg width="0" height="0" style="position:absolute" aria-hidden="true"><filter id="vite-splash-gooey" x="-50%" y="-50%" width="200%" height="200%" color-interpolation-filters="sRGB"><feGaussianBlur stdDeviation="8"><animate attributeName="stdDeviation" values="8;0" begin="0.7s" dur="0.4s" fill="freeze"/></feGaussianBlur><feColorMatrix values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 20 -8"/></filter></svg><div class="${d}" role="img" aria-label="${k(t)}">${t.split("").map((b,y)=>`<span class="splash-gooey-char" style="--d:${150+Math.round(y*f)}ms;--dx:${Math.round((y-h)/Math.max(h,1)*40)}px">${k(b)}</span>`).join("")}</div>`:l==="chars"?`<div class="${d}">${t.split("").map((b,y)=>`<span class="splash-char" style="animation-delay:${y*c}ms">${k(b)}</span>`).join("")}</div>`:`<div class="${d}">${k(t)}</div>`:"";return `
 <div id="vite-splash-screen">
-${x}
+${C}
 ${s}
-${h}
-${w}
-${y}
+${$}
+${B}
 ${v}
-${k}
+${S}
+${w}
 ${i?`<div class="splash-version">v${i}</div>`:""}
-</div>`.replace(/>\s+</g,"><").trim()};var _=e=>{let{duration:r,onlyStandalone:t,showOnce:i,showOnceStorage:a,showOnAppEnter:l,appScopes:p,bodyAttributes:c,bodyClasses:m,svgAnimation:u,respectReducedMotion:g,waitUntilReady:o,minDuration:n,progress:s}=e;return `<script>
+</div>`.replace(/>\s*\n\s*</g,"><").trim()};var _=e=>{let{duration:r,onlyStandalone:t,showOnce:i,showOnceStorage:a,showOnAppEnter:p,appScopes:l,bodyAttributes:c,bodyClasses:m,svgAnimation:u,respectReducedMotion:g,waitUntilReady:o,minDuration:n,progress:s}=e;return `<script>
 (function(){
-  var d=${r},o=${t},s1=${i},ss=${JSON.stringify(a)},ae=${l},sc=${JSON.stringify(p)},ba=${JSON.stringify(c)},bc=${JSON.stringify(m)},sa=${JSON.stringify(u)},rm=${g},wr=${o},md=${n},pg=${s},s=document.getElementById('vite-splash-screen');
+  var d=${r},o=${t},s1=${i},ss=${JSON.stringify(a)},ae=${p},sc=${JSON.stringify(l)},ba=${JSON.stringify(c)},bc=${JSON.stringify(m)},sa=${JSON.stringify(u)},rm=${g},wr=${o},md=${n},pg=${s},s=document.getElementById('vite-splash-screen');
   var bodyBackup=null,shownAt=0,hideScheduled=false,pendingHide=false,fadeTimer=null;
   function prefersReduced(){
     return rm&&window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -437,4 +454,4 @@ ${i?`<div class="splash-version">v${i}</div>`:""}
     }
   }
 })();
-</script>`},j=e=>Array.isArray(e)?e:e?[e]:[],D=e=>Array.isArray(e)?e:e?[e]:[],O=e=>{let{duration:r=3e3,onlyStandalone:t=false,showOnce:i=false,showOnceStorage:a="session",showOnAppEnter:l=false,appScope:p,bodyAttributes:c,bodyClass:m,svgAnimation:u,respectReducedMotion:g=true,waitUntilReady:o=false,minDuration:n=0,progress:s=false,animation:d}=e;return _({duration:r,onlyStandalone:t,showOnce:i,showOnceStorage:a,showOnAppEnter:l,appScopes:D(p),bodyAttributes:c||{},bodyClasses:j(m),svgAnimation:u||null,respectReducedMotion:g,waitUntilReady:o,minDuration:n,progress:s||d==="progress"})};var T=e=>Math.min(100,Math.max(0,e)),q=()=>{let e=useCallback(()=>{if(window.__viteSplashHide){window.__viteSplashHide();return}let i=document.getElementById("vite-splash-screen");i&&(i.classList.add("hidden"),window.__viteSplashRestoreBody?.(),setTimeout(()=>{i.remove();},500)),document.getElementById("vite-splash-critical")?.remove();},[]),r=useCallback(i=>{try{i==="auto"?localStorage.removeItem("v-splash-theme"):localStorage.setItem("v-splash-theme",i);let a=document.getElementById("vite-splash-screen");if(!a)return;a.classList.remove("theme-light","theme-dark"),i!=="auto"&&a.classList.add(`theme-${i}`);}catch{}},[]),t=useCallback(i=>{if(window.__viteSplashSetProgress){window.__viteSplashSetProgress(i);return}let a=document.getElementById("vite-splash-screen");if(!a)return;let l=T(i),p=a.querySelector(".splash-progress-bar"),c=a.querySelector(".splash-progress");p instanceof HTMLElement&&(p.style.transform=`scaleX(${l/100})`),c&&c.setAttribute("aria-valuenow",String(Math.round(l)));},[]);return {hideSplashScreen:e,setSplashTheme:r,setProgress:t}};var L=(e,r)=>{let t=`<style id="vite-splash-critical">${r}</style>`;return /<\/head>/i.test(e)?e.replace(/<\/head>/i,`${t}</head>`):/<html[^>]*>/i.test(e)?e.replace(/<html([^>]*)>/i,`<html$1><head>${t}</head>`):`${t}${e}`},P=(e,r)=>/<body([^>]*)>/i.test(e)?e.replace(/<body([^>]*)>/i,`<body$1>${r}`):`${r}${e}`,J=e=>({name:"vite-plugin-react-splash",transformIndexHtml(r){let t=$(e),i=B(e),a=O(e),l=`${i}${a}`.replace(/>\s+</g,"><").trim(),p=L(r,t);return P(p,l)}});export{P as injectBodySplash,L as injectCriticalCss,q as useSplashScreen,J as viteSplashScreen};
+</script>`},D=e=>Array.isArray(e)?e:e?[e]:[],j=e=>Array.isArray(e)?e:e?[e]:[],H=e=>{let{duration:r=3e3,onlyStandalone:t=false,showOnce:i=false,showOnceStorage:a="session",showOnAppEnter:p=false,appScope:l,bodyAttributes:c,bodyClass:m,svgAnimation:u,respectReducedMotion:g=true,waitUntilReady:o=false,minDuration:n=0,progress:s=false,animation:d}=e;return _({duration:r,onlyStandalone:t,showOnce:i,showOnceStorage:a,showOnAppEnter:p,appScopes:j(l),bodyAttributes:c||{},bodyClasses:D(m),svgAnimation:u||null,respectReducedMotion:g,waitUntilReady:o,minDuration:n,progress:s||d==="progress"})};var T=e=>Math.min(100,Math.max(0,e)),F=()=>{let e=useCallback(()=>{if(window.__viteSplashHide){window.__viteSplashHide();return}let i=document.getElementById("vite-splash-screen");i&&(i.classList.add("hidden"),window.__viteSplashRestoreBody?.(),setTimeout(()=>{i.remove();},500)),document.getElementById("vite-splash-critical")?.remove();},[]),r=useCallback(i=>{try{i==="auto"?localStorage.removeItem("v-splash-theme"):localStorage.setItem("v-splash-theme",i);let a=document.getElementById("vite-splash-screen");if(!a)return;a.classList.remove("theme-light","theme-dark"),i!=="auto"&&a.classList.add(`theme-${i}`);}catch{}},[]),t=useCallback(i=>{if(window.__viteSplashSetProgress){window.__viteSplashSetProgress(i);return}let a=document.getElementById("vite-splash-screen");if(!a)return;let p=T(i),l=a.querySelector(".splash-progress-bar"),c=a.querySelector(".splash-progress");l instanceof HTMLElement&&(l.style.transform=`scaleX(${p/100})`),c&&c.setAttribute("aria-valuenow",String(Math.round(p)));},[]);return {hideSplashScreen:e,setSplashTheme:r,setProgress:t}};var q=(e,r)=>{let t=`<style id="vite-splash-critical">${r}</style>`;return /<\/head>/i.test(e)?e.replace(/<\/head>/i,`${t}</head>`):/<html[^>]*>/i.test(e)?e.replace(/<html([^>]*)>/i,`<html$1><head>${t}</head>`):`${t}${e}`},L=(e,r)=>/<body([^>]*)>/i.test(e)?e.replace(/<body([^>]*)>/i,`<body$1>${r}`):`${r}${e}`,J=e=>({name:"vite-plugin-react-splash",transformIndexHtml(r){let t=O(e),i=M(e),a=H(e),p=`${i}${a}`.replace(/>\s*\n\s*</g,"><").trim(),l=q(r,t);return L(l,p)}});export{L as injectBodySplash,q as injectCriticalCss,F as useSplashScreen,J as viteSplashScreen};

@@ -23,11 +23,11 @@ const config = defineConfig({
       progress: false,
       respectReducedMotion: true,
       text: "Splash playground",
-      textAnimation: "none",
+      textAnimation: "gooey",
       textCharDelay: 40,
       version: "1.1.0",
       animation: "none",
-      backgroundAnimation: "pulse",
+      backgroundAnimation: "breath",
       bodyClass: "overflow-hidden",
       bodyAttributes: { "data-splash-active": "true" },
       svgAnimation: {

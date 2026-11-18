@@ -1,7 +1,7 @@
 import { Plugin } from 'vite';
 
 type SplashThemeMode = 'light' | 'dark' | 'auto';
-type SplashTextAnimation = 'none' | 'chars';
+type SplashTextAnimation = 'none' | 'chars' | 'gooey';
 type SplashShowOnceStorage = 'session' | 'local';
 type SplashBackgroundAnimation = 'none' | 'pulse' | 'breath' | 'gradient' | 'wave';
 type SplashAnimation = 'none' | 'fade' | 'pulse' | 'slide-up' | 'gradient-mesh' | 'spin' | 'bounce' | 'shimmer' | 'ripple' | 'dots' | 'bars' | 'spinner' | 'progress';

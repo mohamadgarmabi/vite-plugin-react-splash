@@ -1,6 +1,6 @@
 type SplashThemeMode = 'light' | 'dark' | 'auto';
 
-type SplashTextAnimation = 'none' | 'chars';
+type SplashTextAnimation = 'none' | 'chars' | 'gooey';
 
 type SplashShowOnceStorage = 'session' | 'local';
 

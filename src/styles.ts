@@ -327,6 +327,26 @@ const generateStyles = (options: SplashScreenOptions): string => {
     `;
   }
 
+  if (textAnimation === 'gooey') {
+    // Filter is dropped at 1.1s (when the SVG blur reaches 0) so the final text is anti-aliased, not alpha-thresholded.
+    extraStyles += `
+      .splash-text-gooey {
+        display: inline-flex; font-size: 2.5rem; font-weight: 700; white-space: pre;
+        filter: url(#vite-splash-gooey);
+        animation: splash-gooey-off 0s 1.1s forwards;
+      }
+      .splash-gooey-char {
+        display: inline-block;
+        animation:
+          splash-gooey-fade 0.25s ease-out both,
+          splash-gooey-slide 0.75s cubic-bezier(0.34, 1.4, 0.64, 1) var(--d) both;
+      }
+      @keyframes splash-gooey-fade { from { opacity: 0; } }
+      @keyframes splash-gooey-slide { from { transform: translateX(var(--dx)) scale(0.6); } }
+      @keyframes splash-gooey-off { to { filter: none; } }
+    `;
+  }
+
   const textInlineStyle = styleObjectToCss(textStyle);
   if (textInlineStyle) {
     extraStyles += `.splash-text { ${textInlineStyle}; }`;
@@ -357,6 +377,7 @@ const generateStyles = (options: SplashScreenOptions): string => {
         transition: opacity 0.01s, visibility 0.01s;
       }
       .splash-char { opacity: 1 !important; transform: none !important; }
+      .splash-text-gooey { filter: none !important; }
     }
     #vite-splash-screen.splash-reduced-motion,
     #vite-splash-screen.splash-reduced-motion * {
@@ -366,6 +387,7 @@ const generateStyles = (options: SplashScreenOptions): string => {
       opacity: 1 !important;
       transform: none !important;
     }
+    #vite-splash-screen.splash-reduced-motion .splash-text-gooey { filter: none !important; }
   `
     : '';
 

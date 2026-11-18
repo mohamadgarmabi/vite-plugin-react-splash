@@ -109,7 +109,7 @@ function App() {
 | `text` | `string` | Text to display below the logo. |
 | `textClassName` | `string` | Extra CSS class(es) for the description text. |
 | `textStyle` | `object` | Custom CSS styles for the description text. |
-| `textAnimation` | `'none' \| 'chars'` | Reveal description all at once or character by character. |
+| `textAnimation` | `'none' \| 'chars' \| 'gooey'` | Reveal description all at once, character by character, or `'gooey'`: letters slide together and melt into each other (SVG blur + alpha threshold), then resolve into crisp text in ~1.1s. Best with a short wordmark; tune size via `textStyle.fontSize`. |
 | `textCharDelay` | `number` | Delay in ms between each character when `textAnimation` is `'chars'`. |
 | `svgAnimation` | `object` | Sequential SVG fill animation. |
 | `bodyAttributes` | `Record<string, string>` | Attributes merged onto `<body>` while splash is visible. |

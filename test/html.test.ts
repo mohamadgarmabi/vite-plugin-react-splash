@@ -43,6 +43,25 @@ describe('buildSplashMarkup', () => {
     expect(html).toContain('animation-delay:10ms');
   });
 
+  it('renders gooey text with filter and symmetric letter offsets', () => {
+    const html = buildSplashMarkup({
+      logo: '<svg></svg>',
+      text: 'a<c',
+      textAnimation: 'gooey',
+    });
+    expect(html).toContain('<filter id="vite-splash-gooey"');
+    expect(html).toContain('values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 20 -8"');
+    expect(html).toContain('splash-text-gooey');
+    expect(html).toContain('aria-label="a&lt;c"');
+    expect(html).toContain('--d:150ms;--dx:-40px">a<');
+    expect(html).toContain('--d:190ms;--dx:0px">&lt;<');
+    expect(html).toContain('--d:230ms;--dx:40px">c<');
+    expect(buildSplashMarkup({ logo: '<svg></svg>', text: 'a b', textAnimation: 'gooey' })).toContain('"> </span>');
+    expect(buildSplashMarkup({ logo: '<svg></svg>', textAnimation: 'gooey' })).not.toContain(
+      'vite-splash-gooey'
+    );
+  });
+
   it('renders loader variants and background layer', () => {
     expect(buildSplashMarkup({ logo: '<svg></svg>', animation: 'dots' })).toContain(
       'splash-dots'
